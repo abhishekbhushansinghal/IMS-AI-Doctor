@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMS AI DOCTOR- Your Immediate Doctor </title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            background-color: #e3f2fd;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .chat-container {
+            width: 72%; /* Increased size by 20% */
+            max-width: 720px; /* Increased max-width by 20% */
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            margin: auto;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: scroll;
+            border: 2px solid #42a5f5;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            background: #bbdefb;
+        }
+        .input-area {
+            margin-top: 10px;
+        }
+        input {
+            width: 75%;
+            padding: 10px;
+            border: 2px solid #64b5f6;
+            border-radius: 5px;
+            background: #e3f2fd;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background: #1976d2;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .user-message, .bot-message {
+            background: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+        .user-message {
+            color: #0d47a1;
+            border-left: 5px solid #1e88e5;
+        }
+        .bot-message {
+            color: #1565c0;
+            border-left: 5px solid #42a5f5;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="color: #0d47a1;">IMS AI DOCTOR Consultation</h2>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <p class="bot-message"><strong>IMS AI DOCTOR:</strong> Hello! What is your name?</p>
+        </div>
+        <div class="input-area" id="name-input-area">
+            <input type="text" id="user-name" placeholder="Enter your name...">
+            <button onclick="askName()">Submit</button>
+        </div>
+        <div class="input-area" id="symptom-input-area" style="display:none;">
+            <input type="text" id="user-symptom" placeholder="Describe your symptoms...">
+            <button onclick="sendMessage()">Consult</button>
+        </div>
+    </div>
+
+    <script>
+        let userName = '';
+        let step = 1; // To track the flow of the conversation
+
+        function askName() {
+            let nameInput = document.getElementById("user-name");
+            userName = nameInput.value.trim();
+            if (userName === "") return;
+            let chatBox = document.getElementById("chat-box");
+
+            chatBox.innerHTML += `<p class="bot-message"><strong>IMS AI DOCTOR:</strong> Hello, ${userName.toUpperCase()}! How can I assist you today?</p>`;
+            nameInput.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Hide name input area and show symptom input area
+            document.getElementById("name-input-area").style.display = "none";
+            document.getElementById("symptom-input-area").style.display = "block";
+
+            setTimeout(() => {
+                chatBox.innerHTML += `<p class="bot-message"><strong>IMS AI DOCTOR:</strong> Please enter your symptoms.</p>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+                step = 2; // Move to symptom step
+            }, 1000);
+        }
+
+        function sendMessage() {
+            let inputField = document.getElementById("user-symptom");
+            let chatBox = document.getElementById("chat-box");
+            let userMessage = inputField.value.trim();
+            if (userMessage === "") return;
+
+            chatBox.innerHTML += `<p class="user-message"><strong>You:</strong> ${userMessage}</p>`;
+            inputField.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            if (step === 2) {
+                setTimeout(() => {
+                    let botResponse = getBotResponse(userMessage);
+                    chatBox.innerHTML += `<p class="bot-message"><strong>IMS AI DOCTOR:</strong> ${botResponse}</p>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                    chatBox.innerHTML += `<p class="bot-message"><strong>⚠️ IMPORTANT NOTES:</strong><br>
+                    ⚠️ Consult a doctor or pharmacist before taking any medication, especially for children, pregnant or breastfeeding women, and individuals with pre-existing conditions.<br>
+                    ⚠️ Avoid self-medicating with antibiotics like Amoxicillin without a prescription.<br>
+                    ⚠️ Never exceed the maximum daily dose to prevent serious side effects (e.g., liver, heart, kidney damage with Paracetamol or Nimesulide).</p>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        function getBotResponse(userInput) {
+            let lowerInput = userInput.toLowerCase();
+            if (lowerInput.includes("fever")) {
+                return "I'm sorry to hear you're feeling unwell. If you have a fever, it's important to rest, stay hydrated, and monitor your symptoms. If your fever is high or persists for more than a couple of days, consider consulting a doctor. Take care and get well soon!. Consider taking Paracetamol (Crocin, Calpol, Dolo) 500 mg–1 g every 4–6 hours (max 4 g/day).";
+            } else if (lowerInput.includes("cough")) {
+                return "I'm sorry to hear you're dealing with a cough. Staying hydrated, resting, and drinking warm fluids might help. If the cough persists for a long time, worsens, or is accompanied by other symptoms, it might be a good idea to consult a doctor. Take care and get well soon!. A persistent cough could indicate an infection. Drink warm fluids and monitor your symptoms. Consider Dextromethorphan (Corex DX, Tussin DM) 10–20 mg every 4 hours or 30 mg every 6–8 hours (max 120 mg/day).";
+            } else if (lowerInput.includes("headache")) {
+                return "I'm sorry to hear you have a headache. Try resting in a quiet, dimly lit room, staying hydrated, and taking deep breaths to relax. If the headache persists, worsens, or is accompanied by other symptoms, consider consulting a doctor. Take care and get well soon!. Headaches can be due to stress or dehydration. Try drinking water and resting. Consider taking Aspirin (Disprin, Ecosprin) 300–600 mg every 6–8 hours (max 2 g/day).";
+            } else if (lowerInput.includes("diarrhea")) {
+                return "I'm sorry you're experiencing diarrhea. Diarrhea can cause dehydration. It's important to stay hydrated by drinking plenty of fluids like water or oral rehydration solutions. Avoid heavy or spicy foods until you feel better. If the symptoms persist for more than a couple of days, or if you're feeling weak or dehydrated, it's a good idea to consult a doctor. Take care and feel better soon!. Consider taking Loperamide (Imodium, Lopamide) 4 mg initially, then 2 mg after each loose stool (max 16 mg/day).";
+            } else {
+                return "I recommend consulting a healthcare professional for a detailed diagnosis.";
+            }
+        }
+    </script>
+</body>
+</html>
