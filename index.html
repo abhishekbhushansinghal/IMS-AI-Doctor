@@ -136,14 +136,14 @@
             let lowerInput = userInput.toLowerCase();
             if (lowerInput.includes("fever")) {
                 return "I'm sorry to hear you're feeling unwell. If you have a fever, it's important to rest, stay hydrated, and monitor your symptoms. If your fever is high or persists for more than a couple of days, consider consulting a doctor. Take care and get well soon!. Consider taking Paracetamol (Crocin, Calpol, Dolo) 500 mg–1 g every 4–6 hours (max 4 g/day).";
-            } else if (lowerInput.includes("cough")) {
+            } else if (lowerInput.includes("cough") || lowerInput.includes("sore") || lowerInput.includes("throat")) {
                 return "I'm sorry to hear you're dealing with a cough. Staying hydrated, resting, and drinking warm fluids might help. If the cough persists for a long time, worsens, or is accompanied by other symptoms, it might be a good idea to consult a doctor. Take care and get well soon!. A persistent cough could indicate an infection. Drink warm fluids and monitor your symptoms. Consider Dextromethorphan (Corex DX, Tussin DM) 10–20 mg every 4 hours or 30 mg every 6–8 hours (max 120 mg/day).";
-            } else if (lowerInput.includes("headache")) {
+            } else if (lowerInput.includes("headache") || lowerInput.includes("pain") || lowerInput.includes("migraine") || lowerInput.includes("ache")) {
                 return "I'm sorry to hear you have a headache. Try resting in a quiet, dimly lit room, staying hydrated, and taking deep breaths to relax. If the headache persists, worsens, or is accompanied by other symptoms, consider consulting a doctor. Take care and get well soon!. Headaches can be due to stress or dehydration. Try drinking water and resting. Consider taking Aspirin (Disprin, Ecosprin) 300–600 mg every 6–8 hours (max 2 g/day).";
-            } else if (lowerInput.includes("diarrhea")) {
+            } else if (lowerInput.includes("diarrhea") || lowerInput.includes("loose motion") || lowerInput.includes("stomach upset") || lowerInput.includes("runny stool")) {
                 return "I'm sorry you're experiencing diarrhea. Diarrhea can cause dehydration. It's important to stay hydrated by drinking plenty of fluids like water or oral rehydration solutions. Avoid heavy or spicy foods until you feel better. If the symptoms persist for more than a couple of days, or if you're feeling weak or dehydrated, it's a good idea to consult a doctor. Take care and feel better soon!. Consider taking Loperamide (Imodium, Lopamide) 4 mg initially, then 2 mg after each loose stool (max 16 mg/day).";
             } else {
-                return " As of now I am trained to to recommend you for symptoms such as - Fever, Cough, Headache, Diarrhea. I recommend consulting a healthcare professional if you are facing any other symptom.";
+                return " As of now my machine learning algorithms are trained to recommend you for symptoms such as - Fever, Cough, Headache, Diarrhea. I recommend consulting a healthcare professional if you are facing any other symptom.";
             }
         }
     </script>
